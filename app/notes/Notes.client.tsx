@@ -6,15 +6,20 @@ import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useDebounce } from "use-debounce";
 import css from "./NotesPage.module.css";
-import { useParams } from "next/navigation";
+// import { useParams } from "next/navigation";
+import SearchBox from "@/components/SearchBox/SearchBox";
+import Pagination from "@/components/Pagination/Pagination";
+import NoteList from "@/components/NoteList/NoteList";
+import NoteForm from "@/components/NoteForm/NoteForm";
+import Loader from "@/components/Loader/Loader";
+import ErrorMessage from "@/components/ErrorMessage/ErrorMessage";
+import Modal from "@/components/Modal/Modal";
 
 function NotesClient() {
   const [query, setQuery] = useState<string>("");
-  //   const [page, setPage] = useState<number>(1);
+  const [page, setPage] = useState<number>(1);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [debouncedQuery] = useDebounce(query, 500);
-
-  const { page } = useParams<{ page: string }>();
 
   const { data, error, isLoading, isError, isSuccess } = useQuery({
     queryKey: ["notes", debouncedQuery, page],
@@ -40,7 +45,7 @@ function NotesClient() {
 
   return (
     <>
-      {/* <div className={css.app}>
+      <div className={css.app}>
         <header className={css.toolbar}>
           <SearchBox setQuery={handleQuery} />
           {isSuccess && totalPages > 1 && (
@@ -67,7 +72,7 @@ function NotesClient() {
             <NoteForm onClose={() => setIsModalOpen(false)} />
           </Modal>
         )}
-      </main> */}
+      </main>
     </>
   );
 }

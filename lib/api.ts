@@ -1,4 +1,4 @@
-import { Note } from "@/types/note";
+import { NewNote, Note } from "@/types/note";
 import axios from "axios";
 
 axios.defaults.baseURL = "https://notehub-public.goit.study/api";
@@ -28,6 +28,41 @@ export async function getNotes(
     const { data } = await axios<GetNotesResponse>("/notes", options);
     console.log(data);
     return data;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function createNote(newNote: NewNote): Promise<Note> {
+  const options = {
+    data: newNote,
+    method: "POST",
+    headers: {
+      accept: "application/json",
+      Authorization: `Bearer ${API_TOKEN}`,
+    },
+  };
+
+  try {
+    const response = await axios<Note>("/notes", options);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function deleteNote(id: string): Promise<Note> {
+  const options = {
+    method: "DELETE",
+    headers: {
+      accept: "application/json",
+      Authorization: `Bearer ${API_TOKEN}`,
+    },
+  };
+
+  try {
+    const response = await axios<Note>(`/notes/${id}`, options);
+    return response.data;
   } catch (error) {
     throw error;
   }

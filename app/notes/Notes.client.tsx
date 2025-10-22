@@ -6,14 +6,13 @@ import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useDebounce } from "use-debounce";
 import css from "./NotesPage.module.css";
-// import { useParams } from "next/navigation";
 import SearchBox from "@/components/SearchBox/SearchBox";
 import Pagination from "@/components/Pagination/Pagination";
 import NoteList from "@/components/NoteList/NoteList";
 import NoteForm from "@/components/NoteForm/NoteForm";
-import Loader from "@/components/Loader/Loader";
-import ErrorMessage from "@/components/ErrorMessage/ErrorMessage";
 import Modal from "@/components/Modal/Modal";
+import ErrorMessage from "./error";
+import Loader from "../loading";
 
 function NotesClient() {
   const [query, setQuery] = useState<string>("");
@@ -27,7 +26,6 @@ function NotesClient() {
     placeholderData: keepPreviousData,
     refetchOnMount: false,
   });
-  console.log(data);
 
   useEffect(() => {
     if (isSuccess && data?.notes?.length === 0) {
@@ -42,6 +40,9 @@ function NotesClient() {
 
   const notes = data?.notes ?? [];
   const totalPages = data?.totalPages ?? 0;
+
+  if (isLoading) return <Loader />;
+  if (error || !data) return <ErrorMessage error={error} />;
 
   return (
     <>
@@ -61,12 +62,9 @@ function NotesClient() {
         </header>
       </div>
       <main>
-        {isLoading && <Loader />}
-        {isError && <ErrorMessage error={error?.message} />}
         {!isLoading && !isError && notes.length > 0 && (
           <NoteList notes={notes} />
         )}
-
         {isModalOpen && (
           <Modal onClose={() => setIsModalOpen(false)}>
             <NoteForm onClose={() => setIsModalOpen(false)} />

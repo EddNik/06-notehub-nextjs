@@ -24,7 +24,6 @@ async function NotesPage({ searchParams }: NotesPageProps) {
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      {/* <p>{page}</p> */}
       <NotesClient />
     </HydrationBoundary>
   );

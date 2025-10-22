@@ -38,7 +38,6 @@ export async function createNote(newNote: NewNote): Promise<Note> {
     data: newNote,
     method: "POST",
     headers: {
-      accept: "application/json",
       Authorization: `Bearer ${API_TOKEN}`,
     },
   };
@@ -55,7 +54,6 @@ export async function deleteNote(id: string): Promise<Note> {
   const options = {
     method: "DELETE",
     headers: {
-      accept: "application/json",
       Authorization: `Bearer ${API_TOKEN}`,
     },
   };
@@ -68,19 +66,18 @@ export async function deleteNote(id: string): Promise<Note> {
   }
 }
 
-// export async function updateNote(id: string, note: NewNote): Promise<Note> {
-//   const options = {
-//     data: note,
-//     method: "PATCH",
-//     headers: {
-//       Authorization: `Bearer ${API_TOKEN}`,
-//     },
-//   };
+export async function fetchNoteById(id: string): Promise<Note> {
+  const options = {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${API_TOKEN}`,
+    },
+  };
 
-//   try {
-//     const response = await axios<Note>(`/notes/${id}`, options);
-//     return response.data;
-//   } catch (error) {
-//     throw error;
-//   }
-// }
+  try {
+    const response = await axios<Note>(`/notes/${id}`, options);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}

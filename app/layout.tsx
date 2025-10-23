@@ -36,21 +36,21 @@ export default function RootLayout({
           <Footer />
           <ReactQueryDevtools initialIsOpen={false} />
         </TanStackProvider>
+        <Toaster
+          position="top-center"
+          reverseOrder={false}
+          toastOptions={{
+            duration: 3000,
+            style: {
+              background: "#363636",
+              color: "#fff",
+              fontSize: "16px",
+              borderRadius: "10px",
+              maxWidth: "100%",
+            },
+          }}
+        />
       </body>
-      <Toaster
-        position="top-center"
-        reverseOrder={false}
-        toastOptions={{
-          duration: 3000,
-          style: {
-            background: "#363636",
-            color: "#fff",
-            fontSize: "16px",
-            borderRadius: "10px",
-            maxWidth: "100%",
-          },
-        }}
-      />
     </html>
   );
 }

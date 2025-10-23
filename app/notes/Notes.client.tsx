@@ -11,8 +11,8 @@ import Pagination from "@/components/Pagination/Pagination";
 import NoteList from "@/components/NoteList/NoteList";
 import NoteForm from "@/components/NoteForm/NoteForm";
 import Modal from "@/components/Modal/Modal";
-import ErrorMessage from "./error";
 import Loader from "../loading";
+import Error from "./error";
 
 function NotesClient() {
   const [query, setQuery] = useState<string>("");
@@ -41,8 +41,8 @@ function NotesClient() {
   const notes = data?.notes ?? [];
   const totalPages = data?.totalPages ?? 0;
 
-  if (isLoading) return <Loader />;
-  if (error || !data) return <ErrorMessage error={error} />;
+  // if (isLoading) return <Loader />;
+  // if (isError || !data) return <Error error={error} />;
 
   return (
     <>
@@ -62,6 +62,9 @@ function NotesClient() {
         </header>
       </div>
       <main>
+        {isLoading && <Loader />}
+        {isError && <Error error={error} />}
+
         {!isLoading && !isError && notes.length > 0 && (
           <NoteList notes={notes} />
         )}

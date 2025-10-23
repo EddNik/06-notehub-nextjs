@@ -21,13 +21,11 @@ export async function getNotes(
       perPage: 12,
       ...(query.trim() !== "" && { search: query.trim() }),
     },
-    method: "GET",
     headers: { Authorization: `Bearer ${API_TOKEN}` },
   };
   try {
-    const { data } = await axios<GetNotesResponse>("/notes", options);
-    console.log(data);
-    return data;
+    const response = await axios.get<GetNotesResponse>("/notes", options);
+    return response.data;
   } catch (error) {
     throw error;
   }
@@ -35,15 +33,13 @@ export async function getNotes(
 
 export async function createNote(newNote: NewNote): Promise<Note> {
   const options = {
-    data: newNote,
-    method: "POST",
     headers: {
       Authorization: `Bearer ${API_TOKEN}`,
     },
   };
 
   try {
-    const response = await axios<Note>("/notes", options);
+    const response = await axios.post<Note>("/notes", newNote, options);
     return response.data;
   } catch (error) {
     throw error;
@@ -52,14 +48,13 @@ export async function createNote(newNote: NewNote): Promise<Note> {
 
 export async function deleteNote(id: string): Promise<Note> {
   const options = {
-    method: "DELETE",
     headers: {
       Authorization: `Bearer ${API_TOKEN}`,
     },
   };
 
   try {
-    const response = await axios<Note>(`/notes/${id}`, options);
+    const response = await axios.delete<Note>(`/notes/${id}`, options);
     return response.data;
   } catch (error) {
     throw error;
@@ -68,14 +63,13 @@ export async function deleteNote(id: string): Promise<Note> {
 
 export async function fetchNoteById(id: string): Promise<Note> {
   const options = {
-    method: "GET",
     headers: {
       Authorization: `Bearer ${API_TOKEN}`,
     },
   };
 
   try {
-    const response = await axios<Note>(`/notes/${id}`, options);
+    const response = await axios.get<Note>(`/notes/${id}`, options);
     return response.data;
   } catch (error) {
     throw error;

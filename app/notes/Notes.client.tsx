@@ -41,9 +41,6 @@ function NotesClient() {
   const notes = data?.notes ?? [];
   const totalPages = data?.totalPages ?? 0;
 
-  // if (isLoading) return <Loader />;
-  // if (isError || !data) return <Error error={error} />;
-
   return (
     <>
       <div className={css.app}>

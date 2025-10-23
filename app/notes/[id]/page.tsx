@@ -13,6 +13,9 @@ interface NoteDetailsProps {
 async function NoteDetails({ params }: NoteDetailsProps) {
   const id = (await params).id;
   const queryClient = new QueryClient();
+  console.log(params);
+
+  console.log(queryClient);
 
   await queryClient.prefetchQuery({
     queryKey: ["notes", id],

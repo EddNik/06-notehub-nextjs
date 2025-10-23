@@ -18,9 +18,14 @@ async function NotesPage({ searchParams }: NotesPageProps) {
   const page = parseInt(searchParams.page) || 1;
 
   await queryClient.prefetchQuery({
-    queryKey: ["note", page],
+    queryKey: ["note", page, ""],
     queryFn: () => getNotes("", page),
   });
+
+  // await queryClient.prefetchQuery({
+  //   queryKey: ["notes", "", 1],
+  //   queryFn: () => getNotes("", 1),
+  // });
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
